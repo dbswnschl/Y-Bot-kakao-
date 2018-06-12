@@ -25,6 +25,11 @@ def reqcheck():
             plugin.tmon()
             print("동작 종료 TMON")
             plugin.req = 0
+        elif plugin.req == 3:
+            print("동작 시작 OK CASH BAG")
+            plugin.ok_cash_bag()
+            print("동작 종료 OK CASH BAG")
+            plugin.req = 0
         time.sleep(1)
 
 
@@ -57,9 +62,52 @@ def message():
                 "buttons": [
                     "온디스크",
                     "티켓몬스터",
+                    "OK캐시백",
                     "최초"
                 ]}
         }
+        return json.dumps(returnobj)
+    elif jdata['content'] == "OK캐시백":
+        plugin.req = 3
+        returnobj = {
+            'message': {
+                'text': "기능을 선택해 주세요.",
+            },
+            "keyboard": {
+                "type": "buttons",
+                "buttons": [
+                    "결과보기(OK캐시백)",
+                    "최초"
+                ]}
+        }
+        return json.dumps(returnobj)
+    elif jdata['content'] == "결과보기(OK캐시백)":
+        if plugin.req != 0:
+            txt = "요청이 진행중 입니다."
+            returnobj = {
+                'message': {
+                    'text': txt
+                },
+                "keyboard": {
+                    "type": "buttons",
+                    "buttons": [
+                        "결과보기(OK캐시백)",
+                        "최초"
+                    ]}
+            }
+        elif plugin.req == 0:
+            txt = plugin.ondisk_ret
+            returnobj = {
+            'message': {
+                'text': txt
+            },
+            "keyboard": {
+                "type": "buttons",
+                "buttons": [
+                    "최초"
+                ]}
+            }
+
         return json.dumps(returnobj)
     elif jdata['content'] == "온디스크":
         plugin.req = 1
