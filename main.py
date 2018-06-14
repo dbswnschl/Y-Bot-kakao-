@@ -15,23 +15,25 @@ def flaskThread(app):
     print("start ")
 def reqcheck():
     while 1:
-        if plugin.req == 1:
-            print("동작 시작 ondisk")
-            plugin.ondisk()
-            print("동작 종료 ondisk")
-            plugin.req = 0
-        elif plugin.req == 2:
-            print("동작 시작 TMON")
-            plugin.tmon()
-            print("동작 종료 TMON")
-            plugin.req = 0
-        elif plugin.req == 3:
-            print("동작 시작 OK CASH BAG")
-            plugin.ok_cash_bag()
-            print("동작 종료 OK CASH BAG")
-            plugin.req = 0
-        time.sleep(1)
-
+        try:
+            if plugin.req == 1:
+                print("동작 시작 ondisk")
+                plugin.ondisk()
+                print("동작 종료 ondisk")
+                plugin.req = 0
+            elif plugin.req == 2:
+                print("동작 시작 TMON")
+                plugin.tmon()
+                print("동작 종료 TMON")
+                plugin.req = 0
+            elif plugin.req == 3:
+                print("동작 시작 OK CASH BAG")
+                plugin.ok_cash_bag()
+                print("동작 종료 OK CASH BAG")
+                plugin.req = 0
+            time.sleep(1)
+        except:
+            print("err")
 
 
 @app.route('/keyboard')
@@ -189,7 +191,7 @@ def message():
             "keyboard": {
                 "type": "buttons",
                 "buttons": [
-                    "온디스크",
+                    "OK캐시백",
                     "최초"
                 ]}
             }
