@@ -43,17 +43,22 @@ class plugin:
         print(self.driver.find_element_by_class_name('content').text)
         self.tmon_ret = self.driver.find_element_by_class_name('content').text
     def ondisk(self):
-        self.driver.get("http://ondisk.co.kr/index.php")
-        self.driver.find_element_by_xpath('//*[@id="mb_id"]').send_keys(config['ACCOUNT']['ondisk_id'])
-        self.driver.find_element_by_xpath('//*[@id="page-login"]/form/div[2]/p[2]/input').send_keys(config['ACCOUNT']['ondisk_pw'])
-        self.driver.find_element_by_xpath('//*[@id="page-login"]/form/div[2]/p[3]/input').click()
-        self.driver.get("http://ondisk.co.kr/index.php?mode=eventMarge&sm=event&action=view&idx=746&event_page=1")
-        self.driver.switch_to_frame(1)
-        self.driver.execute_script("window.alert = function(msg){ window.msg = msg; };")
-        self.driver.find_element_by_class_name('button').click()
+        try:
+            self.driver.get("http://ondisk.co.kr/index.php")
+            self.driver.implicitly_wait(3)
+            self.driver.find_element_by_xpath('//*[@id="mb_id"]').send_keys(config['ACCOUNT']['ondisk_id'])
+            self.driver.find_element_by_xpath('//*[@id="page-login"]/form/div[2]/p[2]/input').send_keys(config['ACCOUNT']['ondisk_pw'])
+            self.driver.find_element_by_xpath('//*[@id="page-login"]/form/div[2]/p[3]/input').click()
+            self.driver.get("http://ondisk.co.kr/index.php?mode=eventMarge&sm=event&action=view&idx=746&event_page=1")
+            self.driver.switch_to_frame(1)
+            self.driver.execute_script("window.alert = function(msg){ window.msg = msg; };")
+            self.driver.find_element_by_class_name('button').click()
 
-        alert_text = self.driver.execute_script("return window.msg;")
-        print(alert_text)
+            alert_text = self.driver.execute_script("return window.msg;")
+            print(alert_text)
+        except:
+            print("ERR")
+            print(self.driver.page_source)
         self.ondisk_ret = alert_text
     def ok_cash_bag(self):
         today= datetime.datetime.now().strftime("%Y%m%d")
