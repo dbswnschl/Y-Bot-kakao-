@@ -34,6 +34,8 @@ def reqcheck():
             time.sleep(1)
         except:
             print("err")
+            plugin.restart()
+            time.sleep(1)
 
 
 @app.route('/keyboard')
